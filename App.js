@@ -1,21 +1,61 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
+import PageHotelInfo from './components/Pages/PageHotelInfo';
+import PageHotelList, { HotelsData } from './components/Pages/PageHotelList';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const PAGES = {
+  HOTEL_LIST: 0,
+  HOTEL_INFO: 1
+}
+
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      page: PAGES.HOTEL_LIST,
+      hotelData: {}
+    }
+  }
+
+  onSelectHotel = (id) => {
+    this.setState({
+      page: PAGES.HOTEL_INFO,
+      hotelData: HotelsData[id]
+    });
+  }
+
+  onReturn = () => {
+    this.setState({
+      page: PAGES.HOTEL_LIST,
+      hotelData: {}
+    })
+  }
+
+  render() {
+    const { page, hotelData } = this.state;
+    return (
+      <View style={styles.app}>
+        {(page == PAGES.HOTEL_LIST) && (
+          <PageHotelList
+            onSelectHotel={this.onSelectHotel}
+          />
+        )}
+        {(page == PAGES.HOTEL_INFO) && (
+          <PageHotelInfo
+            data={hotelData}
+            onReturn={this.onReturn}
+          />
+        )}
+        <StatusBar barStyle="default" />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  app: {
+    backgroundColor: 'white',
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: 'column'
   },
 });
