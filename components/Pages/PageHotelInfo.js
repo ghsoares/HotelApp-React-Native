@@ -5,7 +5,7 @@ import Header from '../Header';
 export default class PageHotelInfo extends React.Component {
     render() {
         const { name, stars, imgUrl } = this.props.data;
-        const { address, telephone, price } = this.props.data;
+        const { address, telephone, cheapestPrice } = this.props.data;
         return (
             <View style={styles.container}>
                 <Header title="Hotéis" backgroundColor="#FF3336">
@@ -27,7 +27,7 @@ export default class PageHotelInfo extends React.Component {
                 </View>
                 <View style={styles.infoRow}>
                     <Text style={styles.textTopic}>Preço:</Text>
-                    <Text style={styles.textInfo}>{`R$ ${price.toString()}`}</Text>
+                    <Text style={styles.textInfo}>{`R$ ${cheapestPrice.toString()}`}</Text>
                 </View>
 
                 <TouchableOpacity

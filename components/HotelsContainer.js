@@ -3,16 +3,16 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import HotelItem from './HotelItem';
 
 export default class HotelsContainer extends React.Component {
-    /*sortData = (a,b) => {
+    sortData = (a,b) => {
         return a.price - b.price;
-    }*/
+    }
 
     renderItem = (item) => {
-        const {name,price,address,listId} = item.item;
+        const {name,cheapestPrice,address,listId} = item.item;
         return (
             <HotelItem
                 name={name}
-                price={price}
+                price={cheapestPrice}
                 address={address}
                 onPress={() => this.props.onSelectHotel(listId)}
             />
@@ -23,7 +23,7 @@ export default class HotelsContainer extends React.Component {
         return (
             <FlatList
                 style={styles.list}
-                data={this.props.data}
+                data={this.props.data.sort(this.sortData)}
                 renderItem={this.renderItem}
                 keyExtractor={item => item.id.toString()}
             />
