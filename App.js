@@ -14,14 +14,15 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       page: PAGES.HOTEL_LIST,
-      hotelData: {}
+      hotelData: {},
+      apiData: [],
     }
   }
 
   onSelectHotel = (id) => {
     this.setState({
       page: PAGES.HOTEL_INFO,
-      hotelData: HotelsData[id]
+      hotelData: this.state.apiData[id]
     });
   }
 
@@ -30,14 +31,13 @@ export default class App extends React.Component {
       page: PAGES.HOTEL_LIST,
       hotelData: {}
     })
-    fetchHotels
   }
 
   componentDidMount() {
     fetchHotels().then(json => {
-      console.log(json);
+      this.setState({apiData: json});
     }).catch(err => {
-      console.log(err);
+      console.error(err);
     });
   }
 
@@ -47,6 +47,7 @@ export default class App extends React.Component {
       <View style={styles.app}>
         {(page == PAGES.HOTEL_LIST) && (
           <PageHotelList
+            data ={this.state.apiData}
             onSelectHotel={this.onSelectHotel}
           />
         )}

@@ -2,26 +2,24 @@ const url = 'http://localhost:8080/guliver-dbe/api';
 
 const fetchHotels = () => {
     return new Promise(async (resolve, reject) => {
-        fetch(`${url}/hoteis`).then(str => {
-            str.json().then(json => {
-                /*json = json.map(el => {
-                    return {
-                        id: el.idHotel,
-                        name: el.nmHotel,
-                        cheapestPrice: el.vlQuarto,
-                        address: el.cidade,
-                        telephone: el.nrTelefone,
-                        stars: el.nrEstrelas,
-                        imgUrl: el.urlImagem
-                    }
-                });*/
-                resolve(json);
-            }).catch(err => {
-                reject(err);
-            });
-        }).catch(err => {
-            reject(err);
+        const urlStr = `${url}/hoteis`;
+        const str = await fetch(urlStr);
+        let json = await str.json();
+
+        json = json.map((el, idx) => {
+            return {
+                id: el.idHotel,
+                listId: idx,
+                name: el.nmHotel,
+                cheapestPrice: el.vlQuarto,
+                address: el.cidade,
+                telephone: el.nrTelefone,
+                stars: el.nrEstrelas,
+                imgUrl: el.urlImagem
+            }
         });
+
+        resolve(json);
     });
 }
 

@@ -4,7 +4,7 @@ import HotelItem from './HotelItem';
 
 export default class HotelsContainer extends React.Component {
     sortData = (a,b) => {
-        return a.price - b.price;
+        return a.cheapestPrice - b.cheapestPrice;
     }
 
     renderItem = (item) => {
