@@ -2,6 +2,7 @@ import React from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
 import PageHotelInfo from './components/Pages/PageHotelInfo';
 import PageHotelList, { HotelsData } from './components/Pages/PageHotelList';
+import fetchHotels from './utils/FetchHotels';
 
 const PAGES = {
   HOTEL_LIST: 0,
@@ -29,6 +30,15 @@ export default class App extends React.Component {
       page: PAGES.HOTEL_LIST,
       hotelData: {}
     })
+    fetchHotels
+  }
+
+  componentDidMount() {
+    fetchHotels().then(json => {
+      console.log(json);
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   render() {
